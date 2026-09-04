@@ -2,31 +2,13 @@ import '../styles/SignIn.css'
 import { X } from 'lucide-react'
 import { useFormik } from 'formik'
 import { useNavigate, NavLink } from 'react-router'
+import { useState } from 'react'
+import { useAuth } from '../context/AuthContext'
 const SignIn = () => {
     const navigate = useNavigate();
-    const handleLogin = async (values) => {
-        try {
-            const response = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values),
-            });
-
-            const userData = await response.json();
-
-            if (!response.ok) {
-                console.log(userData.message);
-                return;
-            }
-            localStorage.setItem("user", JSON.stringify(userData));
-            window.location.reload();
-        }
-        catch (error) {
-            console.log("Something went wrong:", error);
-        }
-    };
+    const { signin } = useAuth();
+    const [serverError, setServerError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -46,7 +28,20 @@ const SignIn = () => {
             return errors;
         },
         onSubmit: (values) => {
-            handleLogin(values);
+            setServerError('');
+            setLoading(true);
+
+            signin(values)
+                .then(() => {
+                    navigate('/');
+                })
+                .catch((err) => {
+                    const message = err.response?.data?.error || 'কিছু একটা সমস্যা হয়েছে';
+                    setServerError(message);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
         }
     });
 
@@ -57,7 +52,7 @@ const SignIn = () => {
                 <X onClick={() => navigate(-1)} size={18} className="close-button"/>
                 <h3 className="welcome-text">আবারও স্বাগতম!</h3>
                 <p className="welcome-description">অধ্যায় এর সকল সেবা পেতে সাইন ইন করুন</p>
-
+                {serverError && <p className="server-error">{serverError}</p>}
                 <form onSubmit={formik.handleSubmit}>
                     <label className="input-label" htmlFor="email">ইমেইল অ্যাড্রেস</label>
                     <br/>
@@ -87,7 +82,9 @@ const SignIn = () => {
                     <br/>
                     <p className="query-text">পাসওয়ার্ড ভুলে গেছেন?</p>
                     <br/>
-                    <button className="submit-button" type="submit">সাইন ইন</button>
+                    <button className="submit-button" type="submit" disabled={loading}>
+                        {loading ? 'অপেক্ষা করুন...' : 'সাইন ইন'}
+                    </button>
                 </form>
                 <div className="divider" />
                 <p className="query-text">

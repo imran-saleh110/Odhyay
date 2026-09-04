@@ -8,5 +8,8 @@
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7"
+  },
+  "allowScripts": {
+    "bcrypt@6.0.0": true
   }
 }

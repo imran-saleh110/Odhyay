@@ -4,13 +4,13 @@ import HomePage from './HomePage'
 import QuestionSolving from './QuestionSolving.jsx'
 import SavedQuestions from './SavedQuestions.jsx'
 import SignIn from "./SignIn.jsx"
-import UnrankedExam from './UnrankedExam'
-import RankedExam from './RankedExam'
 import Footer from '../components/Footer'
 import Profile from './Profile.jsx'
 import Register from './Register.jsx'
-
-
+import UnrankedSimulator from './UnrankedSimulator.jsx'
+import RankedSimulator from './RankedSimulator.jsx'
+import ExamCard from './ExamCard'
+import Result from './Result'
 
 function App() {
 
@@ -46,7 +46,7 @@ function App() {
       path: "/unrankedexam",
       element: <div>
         <Navbar/>
-        <UnrankedExam/>
+        <UnrankedSimulator/>
       </div>
     },
 
@@ -54,10 +54,23 @@ function App() {
       path: "/rankedexam",
       element: <div>
         <Navbar/>
-        <RankedExam/>
+        <RankedSimulator/>
       </div>
     },
-
+    {
+      path: "/exam/:type",
+      element: <div>
+        <Navbar/>
+        <ExamCard/>
+      </div>
+    },
+    {
+      path: "/result/:type",
+      element: <div>
+        <Navbar/>
+        <Result/>
+      </div>
+    },
     {
       path: "/profile",
       element: <div>

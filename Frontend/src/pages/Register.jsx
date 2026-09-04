@@ -2,8 +2,13 @@ import '../styles/SignIn.css'
 import { useFormik } from 'formik'
 import { X } from 'lucide-react'
 import { useNavigate, NavLink } from 'react-router'
+import { useState } from 'react'
+import axios from 'axios'
 const Register = () => {
     const navigate = useNavigate();
+    const [serverError, setServerError] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const formik = useFormik({
         initialValues: {
             displayName: '',
@@ -36,7 +41,21 @@ const Register = () => {
             return errors;
         },
         onSubmit: (values) => {
-            console.log(values);
+            setServerError('');
+            setLoading(true);
+
+            axios.post('/api/users', values)
+            .then((res) => {
+                console.log(res.data);
+                navigate('/signin');
+            })
+            .catch((err) => {
+                    const message = err.response?.data?.error || 'কিছু একটা সমস্যা হয়েছে';
+                    setServerError(message);
+            })
+            .finally(() => {
+                    setLoading(false);
+            });
         }
     });
 
@@ -46,6 +65,8 @@ const Register = () => {
                 <X onClick={() => navigate(-1)} size={18} className="close-button"/>
                 <h3 className="welcome-text">অধ্যায়ে স্বাগতম!</h3>
                 <p className="welcome-description">অধ্যায় এর সকল সেবা পেতে রেজিস্টার করুন</p>
+
+                {serverError && <p className="server-error">{serverError}</p>}
 
                 <form onSubmit={formik.handleSubmit}>
                     <label className="input-label" htmlFor="displayName">আপনার নাম</label>
@@ -113,7 +134,9 @@ const Register = () => {
                         value={formik.values.confirmPassword}
                     />
                     <br/>
-                    <button className="submit-button" type="submit">রেজিস্টার করুন</button>
+                    <button className="submit-button" type="submit" disabled={loading}>
+                        {loading ? 'অপেক্ষা করুন...' : 'রেজিস্টার করুন'}
+                    </button>
                 </form>
                 <div className="divider" />
                 <p className="query-text">

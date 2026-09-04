@@ -21,6 +21,10 @@
     border-radius: 3px;
 }
 
+.server-error{
+    align-self: center;
+    color: #ef4444;
+}
 .close-button {
     color: var(--text-muted);
     margin-left: auto;
@@ -73,6 +77,8 @@
 .input-field.error::placeholder {
     color: #ef4444;
 }
+
+
 
 .submit-button {
     font-family: var(--font-headlink);

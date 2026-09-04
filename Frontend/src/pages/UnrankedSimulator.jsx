@@ -1,8 +1,27 @@
-import React from "react";
 import "../styles/UnrankedSimulator.css";
 import { Award, Play, TriangleAlert } from "lucide-react";
-import Footer from "./Footer";
-const UnrankedSimulator = (props) => {
+import Footer from "../components/Footer";
+import { useState } from 'react'
+import { useNavigate } from 'react-router'
+import axios from "axios";
+const UnrankedSimulator = () => {
+  const navigate = useNavigate();
+  const [quesCount, setQuesCount] = useState("");
+  const [minutes, setMinutes] = useState("");
+  const [secondTime, setSecondTime] = useState(false);
+
+  async function handleStart() {
+    const res = await axios.post("/api/exam/start", {
+      type: "unranked",
+      questionCount: Number(quesCount) || 10,
+      minutes: Number(minutes) || 10,
+      secondTime,
+    })
+
+    navigate("/exam/unranked", {
+      state: { attemptId: res.data.attemptId },
+    });
+  }
 
   return (
     <div>
@@ -83,20 +102,20 @@ const UnrankedSimulator = (props) => {
           <div className="settings-container">
             <div className="quantity-container">
               <p>প্রশ্ন সংখ্যা</p>
-              <input type="number" placeholder="১০" value={props.quesCount} onChange={(e) => props.setQuesCount(e.target.value)} />
+              <input type="number" placeholder="১০" value={quesCount} onChange={(e) => setQuesCount(e.target.value)} />
             </div>
             <div className="quantity-container">
               <p>পরীক্ষার সময় (মিনিট)</p>
-              <input type="number" placeholder="১০" value={props.minutes} onChange={(e) => props.setMinutes(e.target.value)} />
+              <input type="number" placeholder="১০" value={minutes} onChange={(e) => setMinutes(e.target.value)} />
             </div>
           </div>
           <div className="checkbox-container">
-            <input type="checkbox" id="second-time" />
+            <input type="checkbox" id="second-time" checked={secondTime} onChange={(e) => setSecondTime(e.target.checked)}/>
             <label htmlFor="second-time">সেকেন্ড টাইম অপশন (৫% নম্বর কর্তন হবে)</label>
           </div>
           
         
-          <button onClick={props.handleStart} className="start-button">
+          <button onClick={handleStart} className="start-button">
             <Play size={20} />
             পরীক্ষা শুরু করুন
           </button>

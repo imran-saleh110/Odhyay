@@ -1,7 +1,28 @@
-import React from 'react'
+import { useNavigate, useParams, useLocation } from 'react-router'
 import '../styles/Result.css'
-import AnsCard from './AnsCard'
-const Result = (props) => {
+import AnsCard from '../components/AnsCard'
+const Result = () => {
+
+  const navigate = useNavigate();
+  const { type } = useParams(); //ranked or unranked
+  
+  async function handleRetry() {
+    const res = await axios.post("/api/exam/start", {
+          type: "unranked",
+          questionCount: Number(quesCount) || 10,
+          minutes: Number(minutes) || 10,
+          secondTime,
+    })
+
+    navigate(`/exam/${type}`, {
+        state: {attemptId: res.data.attemptId}
+    });
+  }
+
+  function handleNewExam() {
+    navigate(type === "ranked" ? "/rankedexam" : "/unrankedexam");
+  }
+
   return (
       <div className="result-container">
          <div className="result-heading">
@@ -49,8 +70,8 @@ const Result = (props) => {
         </div>
 
         <div className="result-nav">
-            <button className='next-button'>নতুন পরীক্ষা</button>
-            <button className='prev-button' onClick={props.handleRetry}>আবার চেষ্টা করুন</button>
+            <button className='next-button' onClick={handleNewExam}>নতুন পরীক্ষা</button>
+            <button className='prev-button' onClick={handleRetry}>আবার চেষ্টা করুন</button>
         </div>
       </div>
     

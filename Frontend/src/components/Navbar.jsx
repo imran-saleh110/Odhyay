@@ -2,7 +2,7 @@ import { useState } from 'react'
 import '../styles/Navbar.css'
 import { NavLink } from 'react-router'
 import {Menu, X, HomeIcon, FileText, Bookmark, Lock, Award, BarChart3, LogIn, ChevronDown, User, LogOut} from 'lucide-react'
-
+import { useAuth } from '../context/AuthContext'
 
  const Navbar = () => {
   const [isMenuOpen, SetIsMenuOpen] = useState(false);
@@ -11,12 +11,13 @@ import {Menu, X, HomeIcon, FileText, Bookmark, Lock, Award, BarChart3, LogIn, Ch
     SetIsMenuOpen((prev) => !prev);
   };
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user, isAuthenticated, signout } = useAuth();
+  
   const isSignedIn = (user);
 
-  const logout = () => {
-      localStorage.removeItem("user");
-      window.location.reload();
+  const handleSignOut = () => {
+      signout();
+      SetIsProfileMenuOpen(false);
   }
 
   return (
@@ -114,20 +115,21 @@ import {Menu, X, HomeIcon, FileText, Bookmark, Lock, Award, BarChart3, LogIn, Ch
       </div>
 
       <div className="sign-in-container">
-          <div className={`profile-menu-wrapper ${isSignedIn ? "":"hidden-profile"}`}>
+          <div className={`profile-menu-wrapper ${isAuthenticated ? "":"hidden-profile"}`}>
             <button
               className="profile-trigger"
               onClick={() => SetIsProfileMenuOpen(prev => !prev)}
             >
-              <span className="profile-avatar">{ (isSignedIn) ? Array.from(user.user.name)[0] : null }</span>
+              <span className="profile-avatar">{ (isAuthenticated) ? Array.from(user.displayName)[0] : null }</span>
               <span className="active-profile">
-                { (isSignedIn) ? user.user.name : "null" }
-                <span className="role">{ (user && user.user.role) ? user.user.role : "Student" }</span>
+                { (isAuthenticated) ? user.displayName : "null" }
+                {/* <span className="role">{ (user && user.user.role) ? user.user.role : "Student" }</span> */}
+                <span className="role">Student</span>
               </span>
               <ChevronDown className="profile-chevron" size={14}/>
             </button>
 
-            { isProfileMenuOpen && isSignedIn && (
+            { isProfileMenuOpen && isAuthenticated && (
               <div className="profile-dropdown-menu">
 
                 <NavLink
@@ -143,7 +145,7 @@ import {Menu, X, HomeIcon, FileText, Bookmark, Lock, Award, BarChart3, LogIn, Ch
 
                 <button
                   className="profile-dropdown-item profile-dropdown-logout"
-                  onClick={logout}
+                  onClick={handleSignOut}
                 >
                   <LogOut className="profile-dropdown-icon" size={16}/>
                   সাইন আউট
@@ -152,7 +154,7 @@ import {Menu, X, HomeIcon, FileText, Bookmark, Lock, Award, BarChart3, LogIn, Ch
             )}
           </div>
 
-          <NavLink to="/signin" className={isSignedIn ? "hidden-sign-in-link":"sign-in-link"}>
+          <NavLink to="/signin" className={isAuthenticated ? "hidden-sign-in-link":"sign-in-link"}>
               <LogIn size={16}/>
               সাইন ইন
           </NavLink>

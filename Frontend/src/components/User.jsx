@@ -3,9 +3,16 @@ import '../styles/User.css'
 import { Award, Bookmark, BookOpen, Clock2, Zap } from 'lucide-react'
 import Chart from './Chart.jsx'
 import ProgressCard from './ProgressCard.jsx'
-const User = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+import { useAuth } from '../context/AuthContext'
 
+const User = () => {
+  const { user, loading } = useAuth();
+  if (loading) {
+    return <div className='user-container'>লোড হচ্ছে...</div>;
+  }
+  if (!user) {
+    return <div className='user-container'>আপনি সাইন ইন করেননি</div>;
+  }
   return (
     <div className='user-container'>
       <div className="user-details-card">
@@ -14,8 +21,8 @@ const User = () => {
             PS
           </div>
           <div className="name-email-section">
-            <h3>{user.user.name}</h3>
-            <p>{user.user.email}</p>
+            <h3>{user.displayName}</h3>
+            <p>{user.email}</p>
           </div>
         </div>
         <div className="streak-section">
