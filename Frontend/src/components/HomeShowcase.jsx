@@ -13,7 +13,7 @@ const PREVIEW_LIMIT = 1;
 const TABS = [
   { id: "solve", label: "প্রশ্ন সমাধান", to: "/questionsolving" },
   { id: "saved", label: "সংরক্ষিত প্রশ্ন", to: "/savedquestions" },
-  { id: "exam", label: "পরীক্ষা", to: "/unrankedexam" },
+  { id: "exam", label: "পরীক্ষা", to: "/modeltest" },
 ];
 
 const loadOptions = (url, setData) => {
@@ -257,7 +257,7 @@ const HomeShowcase = () => {
               <span>সেকেন্ড টাইম সুবিধা</span>
               <span>ফ্ল্যাগ ও রিভিউ</span>
             </div>
-            <NavLink to="/unrankedexam" className="showcase-cta">
+            <NavLink to="/modeltest" className="showcase-cta">
               <Play size={15} /> পরীক্ষা শুরু করুন
             </NavLink>
           </div>

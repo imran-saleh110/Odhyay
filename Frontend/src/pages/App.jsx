@@ -6,15 +6,15 @@ import SavedQuestions from './SavedQuestions.jsx'
 import SignIn from "./SignIn.jsx"
 import Footer from '../components/Footer'
 import Register from './Register.jsx'
-import UnrankedSimulator from './UnrankedSimulator.jsx'
-import RankedSimulator from './RankedSimulator.jsx'
-import ExamCard from './ExamCard'
+import ModelTest from './ModelTest.jsx'
+import RankedTest from './RankedTest.jsx'
+import ExamPage from './ExamPage.jsx'
 import Result from './Result'
 import ErrorPage from './ErrorPage.jsx'
 import ProtectedRoute from '../components/ProtectedRoute.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import AdminProtectedRoute from '../components/AdminProtectedRoute.jsx'
-import User from './User.jsx'
+import StudentProfile from './StudentProfile.jsx'
 import AdminLayout from '../components/AdminLayout.jsx'
 import AdminDashboard from './AdminDashboard.jsx'
 import AdminQuestions from './AdminQuestions.jsx'
@@ -66,9 +66,9 @@ function App() {
         { path: "/", element: <RootRoute/> },
         { path: "/questionsolving", element: <QuestionSolving/> },
         { path: "/savedquestions", element: <ProtectedRoute><SavedQuestions/></ProtectedRoute> },
-        { path: "/unrankedexam", element: <ProtectedRoute><UnrankedSimulator/></ProtectedRoute> },
-        { path: "/rankedexam", element: <ProtectedRoute><RankedSimulator/></ProtectedRoute> },
-        { path: "/profile", element: <ProtectedRoute><User/></ProtectedRoute> },
+        { path: "/modeltest", element: <ProtectedRoute><ModelTest/></ProtectedRoute> },
+        { path: "/rankedtest", element: <ProtectedRoute><RankedTest/></ProtectedRoute> },
+        { path: "/profile", element: <ProtectedRoute><StudentProfile/></ProtectedRoute> },
         { path: "/signin", element: <SignIn/> },
         { path: "/register", element: <Register/> },
         { path: "/contact", element: <Contact/>},
@@ -78,7 +78,7 @@ function App() {
     {
       element: <StudentBareLayout/>,
       children: [
-          { path: "/exam/:type/:attemptId", element: <ProtectedRoute><ExamCard/></ProtectedRoute> },
+          { path: "/exam/:type/:attemptId", element: <ProtectedRoute><ExamPage/></ProtectedRoute> },
           { path: "/result/:type/:attemptId", element: <ProtectedRoute><Result/></ProtectedRoute> },
           
         ]

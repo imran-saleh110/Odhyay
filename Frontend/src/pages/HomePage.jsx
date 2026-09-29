@@ -5,8 +5,8 @@ import HomeShowcase from "../components/HomeShowcase";
 
 const FEATURES = [
   { to: "/questionsolving", label: "প্রশ্নব্যাংক", art: "questions" },
-  { to: "/unrankedexam", label: "পরীক্ষা", art: "exam" },
-  { to: "/rankedexam", label: "র‍্যাংকিং", art: "ranking" },
+  { to: "/modeltest", label: "পরীক্ষা", art: "exam" },
+  { to: "/rankedtest", label: "র‍্যাংকিং", art: "ranking" },
   { to: "/questionsolving", label: "অনুশীলন", art: "practice" },
 ];
 

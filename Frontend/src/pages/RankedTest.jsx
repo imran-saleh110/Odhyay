@@ -1,4 +1,4 @@
-import "../styles/RankedSimulator.css";
+import "../styles/RankedTest.css";
 import {
   BarChart3,
   LucideSwatchBook,
@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import axios from "../services/axios.js";
 
-const RankedSimulator = () => {
+const RankedTest = () => {
   const navigate = useNavigate();
 
   const [leaderboard, setLeaderboard] = useState([]);
@@ -188,4 +188,4 @@ const RankedSimulator = () => {
   );
 };
 
-export default RankedSimulator;
+export default RankedTest;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "../services/axios.js";
 import '../styles/AdminQuestionForm.css'
+
 const IMPORTANCE_LEVELS = ["low", "medium", "high"];
 
 const loadOptions = (url, setData) => {
@@ -69,6 +70,16 @@ const AdminQuestionForm = ({ question, onClose }) => {
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
+
+  const MAX_FILE_SIZE = 2 * 1024 * 1024; 
+
+  const validateImageFile = (file, setError) => {
+    if (file && file.size > MAX_FILE_SIZE) {
+      setError("ছবির সাইজ ২ মেগাবাইটের বেশি হতে পারবে না");
+      return null;
+    }
+    return file;
+  };
 
   useEffect(() => {
     loadOptions("/api/taxonomy/modules", setModules);
@@ -258,8 +269,6 @@ const AdminQuestionForm = ({ question, onClose }) => {
           </button>
         </div>
 
-        {error && <div className="admin-form-error">{error}</div>}
-
         <label>
           ধরণ
           <select value={type} onChange={(e) => setType(e.target.value)}>
@@ -367,7 +376,7 @@ const AdminQuestionForm = ({ question, onClose }) => {
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => setQuestionImageFile(e.target.files[0] ?? null)}
+            onChange={(e) => setQuestionImageFile(validateImageFile(e.target.files[0] ?? null, setError))}
           />
         </label>
 
@@ -405,9 +414,10 @@ const AdminQuestionForm = ({ question, onClose }) => {
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) =>
-                    updateOption(i, { imageFile: e.target.files[0] ?? null })
-                  }
+                  onChange={(e) => {
+                    const file = validateImageFile(e.target.files[0] ?? null, setError);
+                    if (file !== null || !e.target.files[0]) updateOption(i, { imageFile: file });
+                  }}
                 />
                 {options.length > 2 && (
                   <button type="button" onClick={() => removeOption(i)}>
@@ -439,7 +449,7 @@ const AdminQuestionForm = ({ question, onClose }) => {
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => setAnswerImageFile(e.target.files[0] ?? null)}
+            onChange={(e) =>setAnswerImageFile(validateImageFile(e.target.files[0] ?? null, setError))}
           />
         </label>
 
@@ -479,6 +489,8 @@ const AdminQuestionForm = ({ question, onClose }) => {
           ))}
         </div>
 
+          {error && <div className="admin-form-error">{error}</div>}
+          
         <div className="admin-form-footer">
           <button
             type="button"

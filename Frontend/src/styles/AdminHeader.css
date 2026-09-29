@@ -47,14 +47,14 @@
     border-radius: 8px;
     background-color: transparent;
     border: none;
-    color: rgb(241, 119, 119);
+    color: var(--danger);
     font-size: 0.9rem;
     cursor: pointer;
     font-family: var(--font-headlink);
 }
 
 .admin-header-signout:hover {
-    color: rgb(224, 92, 92);
+    color: var(--danger-hover);
 }
 
 @media (max-width: 850px) {

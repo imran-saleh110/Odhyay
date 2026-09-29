@@ -27,7 +27,7 @@ const Footer = () => {
             সংরক্ষিত প্রশ্ন
           </NavLink>
 
-          <NavLink to={"/rankedexam"} className="footer-link">
+          <NavLink to={"/rankedtest"} className="footer-link">
             প্রতিযোগীতামূলক পরীক্ষা
           </NavLink>
         </div>

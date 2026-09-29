@@ -1,4 +1,4 @@
-import "../styles/User.css";
+import "../styles/StudentProfile.css";
 import {
   Award,
   BookOpen,
@@ -12,7 +12,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import axios from "../services/axios.js";
 import { useEffect, useState } from "react";
 
-const User = () => {
+const StudentProfile = () => {
   const { user, loading, isAuthenticated } = useAuth();
   const [stats, setStats] = useState(null);
   const [streakData, setStreakData] = useState(null);
@@ -171,4 +171,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default StudentProfile;

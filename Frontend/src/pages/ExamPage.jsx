@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import "../styles/ExamCard.css";
+import "../styles/ExamPage.css";
 import { ArrowLeft, ArrowRight, Clock, Flag, Send } from "lucide-react";
 import axios from "../services/axios.js";
 import Countdown from "react-countdown";
-const ExamCard = () => {
+const ExamPage = () => {
   const navigate = useNavigate();
   const { type, attemptId } = useParams(); //ranked or unranked
 
   useEffect(() => {
   if (!attemptId) 
-    navigate(type === "ranked" ? "/rankedexam" : "/unrankedexam", { replace: true });
+    navigate(type === "ranked" ? "/rankedtest" : "/modeltest", { replace: true });
   }, []);
 
   const [questions, setQuestions] = useState([]);
@@ -247,4 +247,4 @@ const ExamCard = () => {
   );
 };
 
-export default ExamCard;
+export default ExamPage;

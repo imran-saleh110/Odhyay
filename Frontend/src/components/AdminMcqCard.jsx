@@ -40,6 +40,13 @@ const AdminMcqCard = ({ question, current, total, onEdit, onDelete, deletingId  
         ))}
       </div>
 
+      {question.answerOrExplanationImage?.url && (
+        <img
+          className="admin-answer-image"
+          src={question.answerOrExplanationImage.url}
+          alt=""
+        />
+      )}
       {question.answerOrExplanationText && (
         <p className="admin-explanation">{question.answerOrExplanationText}</p>
       )}

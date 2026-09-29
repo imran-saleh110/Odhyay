@@ -1,10 +1,10 @@
-import "../styles/UnrankedSimulator.css";
+import "../styles/ModelTest.css";
 import { Award, Play, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "../services/axios.js";
 
-const UnrankedSimulator = () => {
+const ModelTest = () => {
   const navigate = useNavigate();
 
   const [quesCount, setQuesCount] = useState("");
@@ -309,4 +309,4 @@ const UnrankedSimulator = () => {
   );
 };
 
-export default UnrankedSimulator;
+export default ModelTest;

@@ -7,8 +7,8 @@ import { useAuth } from '../context/AuthContext'
 const NAV_LINKS = [
   { to: "/questionsolving", label: "প্রশ্নব্যাংক", icon: FileText },
   { to: "/savedquestions", label: "সংরক্ষিত প্রশ্ন", icon: Bookmark },
-  { to: "/unrankedexam", label: "মডেল টেস্ট", icon: Award },
-  { to: "/rankedexam", label: "প্রতিযোগীতামূলক পরীক্ষা", icon: BarChart3 },
+  { to: "/modeltest", label: "মডেল টেস্ট", icon: Award },
+  { to: "/rankedtest", label: "প্রতিযোগীতামূলক পরীক্ষা", icon: BarChart3 },
 ]
 
   const Navbar = () => {

@@ -49,7 +49,7 @@ const Result = () => {
   }
 
   function handleNewExam() {
-    navigate(type === "ranked" ? "/rankedexam" : "/unrankedexam");
+    navigate(type === "ranked" ? "/rankedtest" : "/modeltest");
   }
 
   if (loading) return <div className="load-error">লোড হচ্ছে...</div>;
@@ -106,7 +106,7 @@ const Result = () => {
         <div className="result-nav">
           {
             type === 'ranked' ? (
-              <button className='next-button' onClick={() => navigate("/rankedexam", { replace: true } )}>লিডারবোর্ড দেখুন</button>
+              <button className='next-button' onClick={() => navigate("/rankedtest", { replace: true } )}>লিডারবোর্ড দেখুন</button>
             ) :
             (
               <div className='next-prev-div'>
